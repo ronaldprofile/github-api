@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  max-width: 50rem;
+  width: min(50rem, 90vw);
   margin: -6rem auto;
 `;
 
@@ -72,6 +72,12 @@ export const Form = styled.form`
       filter: brightness(1.1);
     }
   }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
 `;
 
 export const ShowUser = styled.div`
@@ -81,6 +87,7 @@ export const ShowUser = styled.div`
 export const UserCard = styled.div`
   width: 100%;
   padding: 2rem;
+  margin-top: 1rem;
   position: relative;
   background-color: #ffffff;
 
@@ -107,9 +114,14 @@ export const UserCard = styled.div`
     align-items: center;
     gap: 0.625rem;
 
-    span {
-      font-size: 1.5rem;
+    > div {
+      display: flex;
+      flex-direction: column;
       order: 1;
+
+      strong {
+        font-size: 1.5rem;
+      }
     }
 
     img {
@@ -132,6 +144,21 @@ export const UserCard = styled.div`
       margin-top: 0.5rem;
     }
   }
+
+  @media (max-width: 480px) {
+    .credentials {
+      > div {
+        strong {
+          font-size: 1.125rem;
+        }
+      }
+
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+  }
 `;
 
 export const Message = styled.div`
@@ -143,5 +170,15 @@ export const Message = styled.div`
     margin-top: 0.75rem;
     font-size: 1.25rem;
     text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 100%;
+    }
+
+    p {
+      font-size: 1.125rem;
+    }
   }
 `;

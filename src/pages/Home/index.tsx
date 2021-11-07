@@ -1,7 +1,10 @@
 import { FormEvent, useState } from "react";
 import { SiGithub } from "react-icons/si";
+import toast, { Toaster } from "react-hot-toast";
+
 import githubIllustration from "../../images/github-no-users.svg";
 import axios from "axios";
+
 import {
   Background,
   Container,
@@ -13,20 +16,22 @@ import {
 } from "./styles";
 
 interface IUser {
+  id: number;
   login: string;
-  biography: string;
+  name: string;
+  bio: string;
   avatar_url: string;
 }
 
 export function Home() {
   const [inputValue, setInputValue] = useState("");
-  const [user, setUser] = useState<IUser>();
+  const [users, setUsers] = useState<IUser[]>([]);
 
   function handleSubmitForm(event: FormEvent) {
     event.preventDefault();
 
     if (inputValue.trim() === "") {
-      alert("Preencha o campo abaixo");
+      toast.error("Preencha o campo abaixo");
 
       return;
     }
@@ -37,19 +42,24 @@ export function Home() {
 
   async function getDataFromApi() {
     try {
-      const response = await axios.get(
+      const response = await axios.get<IUser>(
         `https://api.github.com/users/${inputValue}`
       );
 
-      const { name, avatar_url, bio } = response.data;
+      const { login, name, avatar_url, bio, id } = response.data;
 
-      setUser({
-        login: name,
-        avatar_url: avatar_url,
-        biography: bio
-      });
+      const newUser = {
+        id,
+        login,
+        name,
+        avatar_url,
+        bio
+      };
+
+      setUsers([...users, newUser]);
+      toast.success("Usuário encontrado");
     } catch (error) {
-      alert("Opps! Não encontramos nenhum usuário");
+      toast.error("Opps! Não encontramos nenhum usuário");
     }
   }
 
@@ -85,19 +95,26 @@ export function Home() {
         </Form>
 
         <ShowUser>
-          {user ? (
-            <UserCard>
-              <div className="credentials">
-                <span>{user?.login}</span>
-                <img src={user?.avatar_url} alt={user?.login} />
-              </div>
+          {users.length > 0 &&
+            users.map(user => {
+              return (
+                <UserCard key={user.id}>
+                  <div className="credentials">
+                    <div>
+                      <strong>{user.name}</strong>
+                      <span>{user?.login}</span>
+                    </div>
+                    <img src={user?.avatar_url} alt={user?.login} />
+                  </div>
 
-              <div className="about">
-                <strong>Sobre mim</strong>
-                <p>{user?.biography}</p>
-              </div>
-            </UserCard>
-          ) : (
+                  <div className="about">
+                    <strong>Sobre mim</strong>
+                    <p>{user?.bio}</p>
+                  </div>
+                </UserCard>
+              );
+            })}
+          {users.length <= 0 && (
             <Message>
               <img src={githubIllustration} alt="github illustration" />
               <p>
@@ -109,6 +126,7 @@ export function Home() {
           )}
         </ShowUser>
       </Container>
+      <Toaster />
     </>
   );
 }
