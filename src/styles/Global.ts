@@ -2,6 +2,16 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
+  :root {
+    --background: #e5e5e5;
+    --green: #04D361;
+    --text: #3A3A3A;
+    
+    --gray-400: #737380;
+    --gray-500: #A8A8B3;
+    --gray-700: #3D3D4D;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -14,7 +24,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font: 400 1rem "Roboto", sans-serif;
-    background-color: #e5e5e5;
+    background-color: var(--background);
   }
 
   *, input, button  {
@@ -23,6 +33,14 @@ export const GlobalStyles = createGlobalStyle`
 
   button {
    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  li {
+    list-style: none;
   }
 
   .sr-only {
