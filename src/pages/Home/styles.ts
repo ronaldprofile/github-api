@@ -1,184 +1,75 @@
 import styled from "styled-components";
+import githubBackground from "../../images/github-background.svg";
 
-export const Container = styled.div`
-  width: min(50rem, 90vw);
-  margin: -6rem auto;
+export const Container = styled.div``;
+
+export const Wrapper = styled.div`
+  max-width: 714px;
+  margin: 0 auto;
 `;
 
 export const Header = styled.header`
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h1 {
-    color: #ffffff;
-
-    span {
-      color: #010409;
-    }
-  }
-
-  svg {
-    transition: fill 0.2s;
-
-    &:hover {
-      fill: #ffffff;
-    }
-  }
+  padding: 40px 0 100px 0;
+  position: relative;
 `;
 
-export const Background = styled.div`
-  height: 8rem;
+export const Main = styled.main``;
 
-  background-color: #3700b3;
+export const Title = styled.h1`
+  margin-bottom: 40px;
+  font-size: 48px;
+  line-height: 52px;
+  color: var(--text);
+`;
+
+export const GithubBackground = styled.div`
+  height: 100%;
+  width: 688px;
+  position: absolute;
+  top: -40px;
+  left: 512px;
+  z-index: -1;
+  opacity: 0.05;
+
+  background: url(${githubBackground}) no-repeat center;
 `;
 
 export const Form = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-
-  input,
-  button {
-    font-size: 1rem;
-    border-radius: 0.125rem;
-  }
-
-  .field {
-    display: flex;
-    flex: 2;
-
-    input {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      border: 0.0625rem solid #e4e4e4;
-      outline: none;
-    }
-  }
-
-  button {
-    padding: 1rem 1.5rem;
-    flex: 1;
-    background-color: #6200ee;
-    color: #fff;
-
-    font-weight: 700;
-    border: 0;
-    border: 0.0625rem solid #6200ee;
-    transition: filter 0.2s;
-    &:hover {
-      filter: brightness(1.1);
-    }
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-
-    align-items: stretch;
-  }
-`;
-
-export const ShowUser = styled.div`
-  margin-top: 3.125rem;
-`;
-
-export const UserCard = styled.div`
-  width: 100%;
-  padding: 2rem;
-  margin-top: 1rem;
-  position: relative;
-  background-color: #ffffff;
-
-  border-radius: 0.0625rem;
-
-  &::before {
-    content: "";
-    height: 0.125rem;
-    width: 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    background-color: #3700b3;
-    transition: width 0.2s;
-  }
-
-  &:hover::before {
-    width: 100%;
-  }
-
-  .credentials {
+  margin-bottom: 120px;
+  .group {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
 
-    > div {
-      display: flex;
-      flex-direction: column;
-      order: 1;
-
-      strong {
-        font-size: 1.5rem;
-      }
-    }
-
-    img {
-      width: 5rem;
-      height: 5rem;
-
-      clip-path: circle();
-      object-fit: cover;
-    }
-  }
-
-  .about {
-    margin-top: 1rem;
-
-    strong {
-      font-size: 1.25rem;
-    }
-
-    p {
-      margin-top: 0.5rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .credentials {
-      > div {
-        strong {
-          font-size: 1.125rem;
-        }
-      }
-
-      img {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-    }
-  }
-`;
-
-export const Message = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  p {
-    margin-top: 0.75rem;
-    font-size: 1.25rem;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-    img {
+    input {
+      padding: 24px 30px;
       width: 100%;
+      height: 100%;
+
+      font-size: 20px;
+      border: 0;
+      border-radius: 5px 0 0 5px;
     }
 
-    p {
-      font-size: 1.125rem;
+    button {
+      height: 100%;
+
+      padding: 24px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      border: 0;
+      border-radius: 0px 5px 5px 0px;
+      background: var(--green);
+      color: #fff;
+      transition: 0.2s;
+      &:hover {
+        filter: brightness(0.9);
+      }
     }
   }
 `;
+
+export const SectionUsers = styled.section`
+  padding-bottom: 4rem;
+`;
+
+export const ListUsers = styled.ul``;
