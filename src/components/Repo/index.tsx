@@ -1,13 +1,19 @@
 import arrowRight from "../../images/arrow-right.svg";
 import { Container, RepoInfo } from "./styles";
 
-export function Repo() {
+interface RepoProps {
+  name: string;
+  description: string;
+  html_url: string;
+}
+
+export function Repo({ name, description, html_url }: RepoProps) {
   return (
     <Container>
-      <a href="#">
+      <a href={html_url} target="_blank">
         <RepoInfo>
-          <strong>ignite-dtmoney</strong>
-          <span>Ronald Tomaz</span>
+          <strong>{name}</strong>
+          <span>{description || "Repositório sem descrição"}</span>
         </RepoInfo>
 
         <img src={arrowRight} alt="arrow right" />

@@ -1,47 +1,69 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { api } from "../../services/api";
+
 import { Container, Info, Avatar, Bio, MoreInfos, Box } from "./styles";
 
-interface ProfileProps {
+interface IUser {
+  id: number;
+  login: string;
   name: string;
-  username: string;
-  description: string;
-  avatar: string;
+  bio: string;
+  avatar_url: string;
+
+  followers: number;
+  following: number;
 }
 
-export function Profile() {
+interface ProfileProps {
+  totalRepositories: number;
+}
+
+export function Profile({ totalRepositories }: ProfileProps) {
+  const [user, setUser] = useState<IUser | null>(null);
   const { username } = useParams();
+
+  async function getData() {
+    try {
+      const response = await api.get<IUser>(`${username}`);
+      const data = response.data as IUser;
+
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container>
       <Info>
         <Avatar>
-          <img
-            src={"https://github.com/ronaldprofile.png"}
-            alt={"Ronald Tomaz"}
-          />
+          <img src={user?.avatar_url} alt={user?.name} />
         </Avatar>
 
         <Bio>
-          <strong>{"ronaldprofile"}</strong>
-          <p>{"Developer Frontend React JS."}</p>
+          <strong>{user?.login}</strong>
+          <p>{user?.bio}</p>
         </Bio>
       </Info>
 
       <MoreInfos>
         <Box>
-          <strong>38</strong>
+          <strong>{user?.followers}</strong>
           <span>Followers</span>
         </Box>
+
         <Box>
-          <strong>52</strong>
+          <strong>{user?.following}</strong>
           <span>Following</span>
         </Box>
+
         <Box>
-          <strong>15</strong>
-          <span>Stars</span>
-        </Box>
-        <Box>
-          <strong>37</strong>
+          <strong>{totalRepositories}</strong>
           <span>Repos</span>
         </Box>
       </MoreInfos>

@@ -1,12 +1,33 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+import { Link, useParams } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import arrowLeft from "../../images/arrow-left.svg";
 
-import { Container, ListRepos, SectionRepos, Wrapper } from "./styles";
 import { Profile } from "../../components/Profile";
 import { Repo } from "../../components/Repo";
+import { Container, ListRepos, SectionRepos, Wrapper } from "./styles";
+
+interface Repo {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+}
 
 export function User() {
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const { username } = useParams();
+
+  async function fetchReposUser() {
+    const response = await api.get<Repo[]>(`${username}/repos`);
+    setRepos(response.data);
+  }
+
+  useEffect(() => {
+    fetchReposUser();
+  }, []);
+
   return (
     <Container>
       <Wrapper>
@@ -24,11 +45,18 @@ export function User() {
         </header>
 
         <main>
-          <Profile />
+          <Profile totalRepositories={repos.length} />
 
           <SectionRepos>
             <ListRepos>
-              <Repo />
+              {repos.map(repo => (
+                <Repo
+                  key={repo.id}
+                  name={repo.name}
+                  description={repo.description}
+                  html_url={repo.html_url}
+                />
+              ))}
             </ListRepos>
           </SectionRepos>
         </main>

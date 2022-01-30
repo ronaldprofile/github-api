@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
-import axios from "axios";
+import { api } from "../../services/api";
+
 import toast, { Toaster } from "react-hot-toast";
 import logo from "../../images/logo.svg";
-
 import { UserCard } from "../../components/UserCard";
+
 import {
   Container,
   Form,
@@ -28,15 +29,12 @@ export function Home() {
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState<IUser[]>([]);
 
-  async function getDataFromApi() {
+  async function fetchGithubUser() {
     try {
-      const response = await axios.get<IUser>(
-        `https://api.github.com/users/${username}`
-      );
-
+      const response = await api.get<IUser>(`${username}`);
       const { login, name, avatar_url, bio, id } = response.data;
 
-      const newUser = {
+      const user = {
         id,
         login,
         name,
@@ -44,10 +42,11 @@ export function Home() {
         bio
       };
 
-      setUsers([...users, newUser]);
+      setUsers([...users, user]);
       toast.success("Usuário encontrado");
     } catch (error) {
       toast.error("Opps! Não encontramos nenhum usuário");
+      console.log(error);
     }
   }
 
@@ -60,7 +59,7 @@ export function Home() {
       return;
     }
 
-    getDataFromApi();
+    fetchGithubUser();
     setUsername("");
   }
 
@@ -71,7 +70,7 @@ export function Home() {
           <a href="#">
             <img
               src={logo}
-              alt="logo Github Explorer"
+              alt="Logo Github Explorer"
               title="Logo Github Explorer"
             />
           </a>
