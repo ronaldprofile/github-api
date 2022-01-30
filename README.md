@@ -1,6 +1,7 @@
 <h1 align="center">Github Explorer</h1>
 
 <img src="https://ik.imagekit.io/gczsuhmv3/githubapi.png?ik-sdk-version=javascript-1.4.3&updatedAt=1643480005158" />
+<img src="https://ik.imagekit.io/gczsuhmv3/pageuser.png?ik-sdk-version=javascript-1.4.3&updatedAt=1643586795318"/>
 
 ## 💻 Projeto
 
